@@ -29,11 +29,25 @@ def get_user_info(request, pk):
     serializer_class = UserSerializer(queryset, many=True)
     return Response(serializer_class.data)
 
-# class handleClick(generics.RetrieveAPIView, id):
-#     user = User.objects.get(id=id)
+@api_view(['GET'])
+def get_user(request, chat_id):
+    try:
+        user = User.objects.get(chat_id=chat_id)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
-#     user.balance += user.tap_count
-#     user.energy -= user.tap_count
+    serializer = UserSerializer(user)
+    return Response(serializer.data)
 
-#     user.save
+@api_view(['PUT'])
+def update_user(request, chat_id):
+    try:
+        user = User.objects.get(chat_id=chat_id)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
+    serializer = UserSerializer(user, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
