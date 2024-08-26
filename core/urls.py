@@ -6,4 +6,5 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('user/<int:chat_id>/', views.get_user, name='get_user'),
     path('user/<int:chat_id>/update/', views.update_user, name='update_user'),
+    path('new-ref/', views.new_ref, name='new_ref')
 ]
