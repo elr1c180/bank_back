@@ -61,13 +61,16 @@ def  new_ref(request):
         chat_id = referal,
         username = username,
         first_name = name,
+        balance = 25000,
         level = Level.objects.get(level=1)
     )
     
     new_user.save()
 
     link_owner = User.objects.get(chat_id=link_owner)
-
+    link_owner.balance += 50000
     link_owner.referals.add(new_user)
+    
+    link_owner.save()
 
     return Response({'message': 'User created'}, status=status.HTTP_201_CREATED)
