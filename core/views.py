@@ -57,7 +57,7 @@ def  new_ref(request):
     referal, link_owner, username, name = request.data['referal'], request.data['link_owner'], request.data['username'], request.data['name']
     # проверка на то что он уже чей-то реферал, добавить  запись в бд
     if len(User.objects.filter(chat_id=referal)) != 0:
-        return Response({'message': 'User not exist or alredy referal'}, status=status.HTTP_423_LOCKED)
+        return Response({'message': 'User not exist or alredy referal'}, status=status.HTTP_100_CONTINUE)
     else:
         new_user = User.objects.create(
             chat_id = referal,
