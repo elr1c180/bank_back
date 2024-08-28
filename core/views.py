@@ -4,6 +4,8 @@ from .models import *
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from django.shortcuts import get_object_or_404
 
 @api_view(['POST'])
 def create_user(request):
@@ -74,3 +76,16 @@ def  new_ref(request):
     link_owner.save()
 
     return Response({'message': 'User created'}, status=status.HTTP_201_CREATED)
+
+class UserReferralsView(APIView):
+    def get(self, request, chat_id):
+        # Fetch the user by chat_id
+        user = get_object_or_404(User, chat_id=chat_id)
+        
+        # Get the referrals of the user
+        referrals = user.referals.all()
+
+        # Serialize the referrals data
+        serializer = UserSerializer(referrals, many=True)
+        
+        return Response(serializer.data, status=status.HTTP_200_OK)
