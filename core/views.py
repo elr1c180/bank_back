@@ -60,7 +60,7 @@ def  new_ref(request):
     # проверка на то что он уже чей-то реферал, добавить  запись в бд
     # реферала не существует в бд, он уже не явлется рефералом
     
-    if len(User.objects.get(chat_id=referal)) == 0 and User.objects.get(chat_id=referal) != True:
+    if len(User.objects.filter(chat_id=referal)) == 0 and User.objects.get(chat_id=referal) != True:
         new_user = User.objects.create(
             chat_id = referal,
             username = username,
