@@ -79,13 +79,8 @@ def  new_ref(request):
 
 class UserReferralsView(APIView):
     def get(self, request, chat_id):
-        # Fetch the user by chat_id
         user = get_object_or_404(User, chat_id=chat_id)
-        
-        # Get the referrals of the user
         referrals = user.referals.all()
-
-        # Serialize the referrals data
         serializer = UserSerializer(referrals, many=True)
         
         return Response(serializer.data, status=status.HTTP_200_OK)

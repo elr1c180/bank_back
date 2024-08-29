@@ -5,6 +5,7 @@ class User(models.Model):
     username = models.CharField(max_length=250, verbose_name='Username')
     first_name = models.CharField(max_length=250, verbose_name='Имя')
     last_name = models.CharField(max_length=250, verbose_name='Фамилия')
+    is_referal = models.BooleanField(verbose_name='Реферал', null=True, blank=True)
     balance = models.IntegerField('Баланс', default=0)
     energy = models.IntegerField('Энергия', default=1000)
     tap_count = models.IntegerField('Очки/Нажатие', default=1)
