@@ -58,24 +58,29 @@ def update_user(request, chat_id):
 def  new_ref(request):
     referal, link_owner, username, name = request.data['referal'], request.data['link_owner'], request.data['username'], request.data['name']
     # проверка на то что он уже чей-то реферал, добавить  запись в бд
+    # реферала не существует в бд, он уже не явлется рефералом
     
-    new_user = User.objects.create(
-        chat_id = referal,
-        username = username,
-        first_name = name,
-        balance = 25000,
-        level = Level.objects.get(level=1)
-    )
-    
-    new_user.save()
+    if len(User.objects.get(chat_id=referal)) == 0 and User.objects.get(chat_id=referal) != True:
+        new_user = User.objects.create(
+            chat_id = referal,
+            username = username,
+            first_name = name,
+            balance = 25000,
+            is_referal = True,
+            level = Level.objects.get(level=1)
+        )
+        
+        new_user.save()
 
-    link_owner = User.objects.get(chat_id=link_owner)
-    link_owner.balance += 50000
-    link_owner.referals.add(new_user)
-    
-    link_owner.save()
+        link_owner = User.objects.get(chat_id=link_owner)
+        link_owner.balance += 50000
+        link_owner.referals.add(new_user)
+        
+        link_owner.save()
 
-    return Response({'message': 'User created'}, status=status.HTTP_201_CREATED)
+        return Response({'message': 'User created'}, status=status.HTTP_201_CREATED)
+    else:
+        return Response({'message': 'Error: User  alredy exist or referal'}, status=status.HTTP_423_LOCKED)
 
 class UserReferralsView(APIView):
     def get(self, request, chat_id):
