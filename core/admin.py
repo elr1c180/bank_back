@@ -5,7 +5,7 @@ class EnergyDisplay(admin.ModelAdmin):
     list_display = ('energy_level', 'price')
 
 class TapDisplay(admin.ModelAdmin):
-    list_display = ('energy_level', 'price')
+    list_display = ('tap_level', 'price')
 
 class LevelDisplay(admin.ModelAdmin):
     search_fields  = ("title", )
