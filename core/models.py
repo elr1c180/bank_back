@@ -9,7 +9,7 @@ class User(models.Model):
     balance = models.IntegerField('Баланс', default=0)
     energy = models.IntegerField('Энергия', default=1000)
     tap_count = models.IntegerField('Очки/Нажатие', default=1)
-    energy_level = models.ForeignKey("EnergyLevel", on_delete=models.CASCADE, verbose_name='Уровень энергии')
+    energy_level = models.ForeignKey("EnergyLevel", on_delete=models.CASCADE, verbose_name='Уровень энергии', null=True, blank=True)
     total_per_hour= models.IntegerField('Заработок за секунду', default=0)
     referals = models.ManyToManyField('User', verbose_name='Рефералы пользователя', blank=True, null=True)
     task_list = models.ManyToManyField('Tasks', verbose_name='Список выполненных заданий', blank=True, null=True)
