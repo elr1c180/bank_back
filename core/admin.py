@@ -1,7 +1,10 @@
 from django.contrib import admin
-from .models import User, Level, Tasks, Social_Network, EnergyLevel
+from .models import User, Level, Tasks, Social_Network, EnergyLevel,  TapLevel
 
 class EnergyDisplay(admin.ModelAdmin):
+    list_display = ('energy_level', 'price')
+
+class TapDisplay(admin.ModelAdmin):
     list_display = ('energy_level', 'price')
 
 class LevelDisplay(admin.ModelAdmin):
@@ -33,3 +36,4 @@ admin.site.register(Level, LevelDisplay)
 admin.site.register(Tasks, TaskDisplay)
 admin.site.register(Social_Network)
 admin.site.register(EnergyLevel, EnergyDisplay)
+admin.site.register(TapLevel, TapDisplay)
