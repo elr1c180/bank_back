@@ -32,7 +32,7 @@ class EnergyLevel(models.Model):
         verbose_name_plural = 'Уровни энергии'
     
     def __str__(self):
-        return self.energy_level
+        return str(self.energy_level)
 
 class Level(models.Model):
     title = models.CharField(verbose_name='Название уровня', max_length=250)
