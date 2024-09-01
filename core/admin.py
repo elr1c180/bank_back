@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import User, Level, Tasks, Social_Network
+from .models import User, Level, Tasks, Social_Network, EnergyLevel
+
+class EnergyDisplay(admin.ModelAdmin):
+    list_display = ('energy_level', 'price')
 
 class LevelDisplay(admin.ModelAdmin):
     search_fields  = ("title", )
@@ -29,3 +32,4 @@ admin.site.register(User, UserDisplay)
 admin.site.register(Level, LevelDisplay)
 admin.site.register(Tasks, TaskDisplay)
 admin.site.register(Social_Network)
+admin.site.register(EnergyLevel, EnergyDisplay)

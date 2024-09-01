@@ -9,10 +9,12 @@ class User(models.Model):
     balance = models.IntegerField('Баланс', default=0)
     energy = models.IntegerField('Энергия', default=1000)
     tap_count = models.IntegerField('Очки/Нажатие', default=1)
+    energy_level = models.ForeignKey("EnergyLevel", on_delete=models.CASCADE, verbose_name='Уровень энергии')
     total_per_hour= models.IntegerField('Заработок за секунду', default=0)
     referals = models.ManyToManyField('User', verbose_name='Рефералы пользователя', blank=True, null=True)
     task_list = models.ManyToManyField('Tasks', verbose_name='Список выполненных заданий', blank=True, null=True)
     level = models.ForeignKey('Level', on_delete=models.CASCADE, verbose_name='Уровень')
+
 
     class Meta:
         verbose_name = 'Пользователь'
@@ -20,6 +22,17 @@ class User(models.Model):
 
     def __str__(self):
         return self.username
+
+class EnergyLevel(models.Model):
+    energy_level = models.IntegerField('Уровень энергии', default=1)
+    price = models.IntegerField('Цена за повышение уровня', default = 1)
+
+    class Meta:
+        verbose_name = 'Уровень энергии'
+        verbose_name_plural = 'Уровни энергии'
+    
+    def __str__(self):
+        return self.energy_level
 
 class Level(models.Model):
     title = models.CharField(verbose_name='Название уровня', max_length=250)
@@ -32,7 +45,6 @@ class Level(models.Model):
 
     def __str__(self):
         return self.title
-
 
 class Tasks(models.Model):
     title = models.CharField(verbose_name='Название задания', max_length=250)

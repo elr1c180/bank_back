@@ -1,4 +1,3 @@
-
 from .serializers import UserSerializer
 from .models import *
 from rest_framework import status
@@ -57,9 +56,7 @@ def update_user(request, chat_id):
 @api_view(['POST'])
 def  new_ref(request):
     referal, link_owner, username, name = request.data['referal'], request.data['link_owner'], request.data['username'], request.data['name']
-    # проверка на то что он уже чей-то реферал, добавить  запись в бд
-    # реферала не существует в бд, он уже не явлется рефералом
-    
+ 
     if len(User.objects.filter(chat_id=referal)) == 0 and len(User.objects.filter(chat_id=link_owner)) != 0:
         new_user = User.objects.create(
             chat_id = referal,
