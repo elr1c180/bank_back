@@ -10,6 +10,7 @@ class User(models.Model):
     energy = models.IntegerField('Энергия', default=1000)
     tap_count = models.IntegerField('Очки/Нажатие', default=1)
     energy_level = models.ForeignKey("EnergyLevel", on_delete=models.CASCADE, verbose_name='Уровень энергии', null=True, blank=True)
+    tap_level = models.ForeignKey("TapLevel", on_delete=models.CASCADE, verbose_name='Уровень нажатия', null=True, blank=True)
     total_per_hour= models.IntegerField('Заработок за секунду', default=0)
     referals = models.ManyToManyField('User', verbose_name='Рефералы пользователя', blank=True, null=True)
     task_list = models.ManyToManyField('Tasks', verbose_name='Список выполненных заданий', blank=True, null=True)
@@ -33,6 +34,17 @@ class EnergyLevel(models.Model):
     
     def __str__(self):
         return str(self.energy_level)
+
+class TapLevel(models.Model):
+    tap_level = models.IntegerField('Уровень нажатия', default=1)
+    price = models.IntegerField('Цена за повышение уровня', default = 1)
+
+    class Meta:
+        verbose_name = 'Уровень нажатия'
+        verbose_name_plural = 'Уровни нажатия'
+    
+    def __str__(self):
+        return str(self.tap_level)
 
 class Level(models.Model):
     title = models.CharField(verbose_name='Название уровня', max_length=250)
