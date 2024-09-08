@@ -81,3 +81,16 @@ class Social_Network(models.Model):
     def __str__(self):
         return self.title
 
+class Card(models.Model):
+    title = models.CharField(verbose_name='Название карточки', max_length=250)
+    img = models.ImageField(upload_to='media/', verbose_name='Изображение карточки')
+    price = models.IntegerField(verbose_name='Прайс за карточку')
+
+    # Не финальная версия
+    class Meta:
+        verbose_name = 'Карточка'
+        verbose_name_plural = 'Карточки'
+
+    
+    def __str__(self):
+        return self.title

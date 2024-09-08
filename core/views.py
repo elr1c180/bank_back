@@ -86,3 +86,10 @@ class UserReferralsView(APIView):
         serializer = UserSerializer(referrals, many=True)
         
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UserRankingView(APIView):
+    def get(self, request):
+        users = User.objects.order_by('-total_per_hour')
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
