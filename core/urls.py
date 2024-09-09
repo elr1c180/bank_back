@@ -8,5 +8,6 @@ urlpatterns = [
     path('user/<int:chat_id>/update/', views.update_user, name='update_user'),
     path('new-ref/', views.new_ref, name='new_ref'),
     path('user-ref/<int:chat_id>/', views.UserReferralsView.as_view(), name='user-referrals'),
-    path('level_info/<int:level_id>', views.get_level, name='get_level')
+    path('level_info/<int:level_id>', views.get_level, name='get_level'),
+    path('user-ranking/', views.UserRankingView.as_view(), name='user-ranking'),
 ]
