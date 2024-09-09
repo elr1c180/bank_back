@@ -1,4 +1,4 @@
-from .serializers import UserSerializer
+from .serializers import UserSerializer, LevelSer
 from .models import *
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -93,3 +93,10 @@ class UserRankingView(APIView):
         users = User.objects.order_by('-total_per_hour')
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_level(request, level_id):
+    level = Level.objects.get(id=level_id)
+    serializer = LevelSer(level)
+    return Response(serializer.data)
