@@ -10,7 +10,7 @@ class TapDisplay(admin.ModelAdmin):
 
 class LevelDisplay(admin.ModelAdmin):
     search_fields  = ("title", )
-    list_display = ('title', 'level', 'min_balance')
+    list_display = ('title', 'level', 'min_balance', 'max_balance')
 
 class TaskDisplay(admin.ModelAdmin):
     search_fields = ("title", "url",)

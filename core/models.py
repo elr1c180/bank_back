@@ -50,6 +50,7 @@ class Level(models.Model):
     title = models.CharField(verbose_name='Название уровня', max_length=250)
     level = models.IntegerField(verbose_name='Уровень')
     min_balance = models.IntegerField(verbose_name='Минимальный баланс для получения уровня')
+    max_balance = models.IntegerField(verbose_name='Максимальный баланс для уровня')
 
     class Meta:
         verbose_name = 'Уровень'

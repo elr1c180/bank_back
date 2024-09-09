@@ -97,6 +97,6 @@ class UserRankingView(APIView):
 
 @api_view(['GET'])
 def get_level(request, level_id):
-    level = Level.objects.get(id=level_id)
-    serializer = LevelSer(level)
+    level = Level.objects.filter(id=level_id)
+    serializer = LevelSer(level, many=True)
     return Response(serializer.data)
