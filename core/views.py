@@ -97,17 +97,14 @@ class UserRankingView(APIView):
 
 @api_view(['GET'])
 def get_tasks(request, chat_id):
-    # Fetch the user
     try:
         user = User.objects.get(chat_id=chat_id)
     except User.DoesNotExist:
         return Response({"error": "User not found"}, status=404)
 
-    # Get the tasks the user hasn't completed
     completed_tasks = user.task_list.all()
     available_tasks = Tasks.objects.exclude(id__in=completed_tasks)
 
-    # Serialize the data
     serializer = TaskSer(available_tasks, many=True)
 
     return Response(serializer.data)
@@ -125,3 +122,25 @@ def get_cards(request):
     serializer = CardSer(cards, many=True)
 
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def complete_task(request, chat_id, task_id):
+    try:
+        user = User.objects.get(chat_id=chat_id)
+        task = Tasks.objects.get(id=task_id)
+
+        # Проверяем, выполнено ли задание уже
+        if user.task_list.filter(id=task_id).exists():
+            return Response({"error": "Task already completed"}, status=400)
+
+        # Добавляем вознаграждение к балансу пользователя
+        user.balance += task.earn
+        user.task_list.add(task)
+        user.save()
+
+        return Response({"success": "Task completed", "new_balance": user.balance})
+    except User.DoesNotExist:
+        return Response({"error": "User not found"}, status=404)
+    except Tasks.DoesNotExist:
+        return Response({"error": "Task not found"}, status=404)
