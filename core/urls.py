@@ -14,5 +14,5 @@ urlpatterns = [
     path('user-ranking/', views.UserRankingView.as_view(), name='user-ranking'),
     path('get_cards/', views.get_cards, name='get_card'),
     path('get_tasks/<int:chat_id>', views.get_tasks, name='get_tasks'),
-    path('complete_task/<int:chat_id/<int:task_id>', views.complete_task, name='completed')
+    path('complete_task/<int:chat_id>/<int:task_id>', views.complete_task, name='completed')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
