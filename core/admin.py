@@ -34,10 +34,7 @@ class UserDisplay(admin.ModelAdmin):
 
 class CardDisplay(admin.ModelAdmin):
 
-    readonly_fields = ["preview"]
-
-    def preview(self, obj):
-        return mark_safe("<img width='50' src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1000px-Instagram_logo_2022.svg.png'>")
+    list_display = ('title', 'price', 'earn_per_hour', 'category')
 
 admin.site.register(User, UserDisplay)
 admin.site.register(Level, LevelDisplay)

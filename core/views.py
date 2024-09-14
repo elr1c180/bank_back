@@ -1,4 +1,4 @@
-from .serializers import UserSerializer, LevelSer
+from .serializers import UserSerializer, LevelSer, CardSer, TaskSer
 from .models import *
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -96,7 +96,32 @@ class UserRankingView(APIView):
 
 
 @api_view(['GET'])
+def get_tasks(request, chat_id):
+    # Fetch the user
+    try:
+        user = User.objects.get(chat_id=chat_id)
+    except User.DoesNotExist:
+        return Response({"error": "User not found"}, status=404)
+
+    # Get the tasks the user hasn't completed
+    completed_tasks = user.task_list.all()
+    available_tasks = Tasks.objects.exclude(id__in=completed_tasks)
+
+    # Serialize the data
+    serializer = TaskSer(available_tasks, many=True)
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
 def get_level(request, level_id):
     level = Level.objects.get(id=level_id)
     serializer = LevelSer(level)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_cards(request):
+
+    cards = Card.objects.all()
+    serializer = CardSer(cards, many=True)
+
     return Response(serializer.data)

@@ -1,5 +1,12 @@
 from django.db import models
 
+CATEGORY_CHOICES =( 
+    ("1", "Marketing"), 
+    ("2", "System"), 
+    ("3", "Geography"), 
+
+) 
+
 class User(models.Model):
     chat_id = models.IntegerField()
     username = models.CharField(max_length=250, verbose_name='Username')
@@ -64,6 +71,10 @@ class Tasks(models.Model):
     url = models.CharField(verbose_name='Ссылка', max_length=1000)
     social_network = models.ForeignKey('Social_Network', on_delete=models.CASCADE, verbose_name='Соц. сеть')
     earn = models.IntegerField('Вознаграждение за задание', default=0)
+    icon = models.ImageField(upload_to='', verbose_name='Изображение для задания', null=True, blank=True)
+
+    left_gradient = models.CharField(verbose_name='Левый цвет', max_length=250)
+    right_gradient = models.CharField(verbose_name='Правый цвет', max_length=250)
 
     class Meta:
         verbose_name = 'Задание'
@@ -84,10 +95,15 @@ class Social_Network(models.Model):
 
 class Card(models.Model):
     title = models.CharField(verbose_name='Название карточки', max_length=250)
-    img = models.ImageField(upload_to='media/', verbose_name='Изображение карточки')
+    img = models.ImageField(upload_to='', verbose_name='Изображение карточки')
     price = models.IntegerField(verbose_name='Прайс за карточку')
+    earn_per_hour = models.IntegerField(verbose_name='Прибыль в час')
 
-    # Не финальная версия
+    first_gradient = models.CharField(verbose_name='Верхний градиент', max_length=250)
+    second_gradient = models.CharField(verbose_name='Нижний градиент', max_length=250)
+
+    category = models.CharField(verbose_name='Категория', choices=CATEGORY_CHOICES, max_length=250, null=True, blank=True)
+
     class Meta:
         verbose_name = 'Карточка'
         verbose_name_plural = 'Карточки'
